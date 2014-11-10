@@ -1,0 +1,13 @@
+{
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "rranshous/testsinatraapp"
+    }
+  },
+  "id": "testsinatra10",
+  "instances": "1",
+  "cpus": "0.5",
+  "mem": "500",
+  "uris": []
+}

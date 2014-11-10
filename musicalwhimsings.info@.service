@@ -1,0 +1,21 @@
+[Unit]
+Description=musicalwhimsings
+After=docker.service
+After=etcd.service
+Require=etcd.service
+
+[Service]
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+ExecStartPre=/usr/bin/docker kill musicalwhimsings-%i
+ExecStartPre=/usr/bin/docker rm musicalwhimsings-%i
+ExecStartPre=/usr/bin/docker pull rranshous/musicalwhimsing.info
+ExecStartPre=/bin/sh -c "/bin/etcdctl set \"/vulcand/upstreams/musicalwhimsings/endpoints/musicalwhimsings@%i.service\" http://$COREOS_PUBLIC_IPV4:%i; \
+  /bin/etcdctl set \"/vulcand/hosts/musicalwhimsings.info/locations/home/path\" '/.*'; \
+  /bin/etcdctl set /vulcand/hosts/musicalwhimsings.info/locations/home/upstream musicalwhimsings"
+ExecStart=/usr/bin/docker run --name musicalwhimsings-%i --rm -p %i:5000 -e PORT=5000 rranshous/musicalwhimsing.info
+#ExecStop=/usr/bin/docker kill musicalwhimsings-%i
+ExecStop=/bin/sh -c "/bin/etcdctl rm /vulcand/upstreams/musicalwhimsings/endpoints/musicalwhimsings@i.service
+
+[X-Fleet]
+X-Conflicts=musicalwhimsings.com@%i.service

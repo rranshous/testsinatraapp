@@ -1,0 +1,17 @@
+{
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "bobrik/marathon-tcp-haproxy"
+    }
+  },
+  "env": {
+    "RELOAD_TTL": "10",
+    "DISCOVERY_URL": "10.132.188.114:8080"
+  },
+  "id": "tcp-haproxy",
+  "instances": "1",
+  "cpus": "0.5",
+  "mem": "200",
+  "uris": []
+}
