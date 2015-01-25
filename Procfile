@@ -1,1 +1,1 @@
-web: thin start -p $PORT
+web: bundle exec ruby app.rb -p ${PORT:-5000}
